@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -32,6 +35,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         cmdCalcular = new javax.swing.JButton();
+        cmdBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,10 +49,17 @@ public class Principal extends javax.swing.JFrame {
                 txtAnosActionPerformed(evt);
             }
         });
+        txtAnos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAnosKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtAnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 100, -1));
 
         jLabel2.setText("Bonificacion Total");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 100, 20));
+
+        txtTotal.setEditable(false);
         jPanel1.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 100, -1));
 
         cmdCalcular.setText("Calcular");
@@ -58,6 +69,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+
+        cmdBorrar.setText("Borrar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 70, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,6 +105,11 @@ public class Principal extends javax.swing.JFrame {
         String res;
         double años, Año1, bonos, bonif;
         
+        if (txtAnos.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite por favor los años", "Error", JOptionPane.ERROR_MESSAGE);
+            txtAnos.requestFocusInWindow();
+        } else {
+        
         años = Double.parseDouble(txtAnos.getText());
         
         Año1  = 100000;
@@ -95,8 +119,25 @@ public class Principal extends javax.swing.JFrame {
         res = String.valueOf(bonif);
         
         txtTotal.setText(res);
-               
+        }       
     }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+        // TODO add your handling code here:
+        txtAnos.setText("");
+        txtTotal.setText("");
+        txtAnos.requestFocusInWindow();
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void txtAnosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAnosKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+         if (!Character.isDigit(c)) {
+              getToolkit().beep();
+              evt.consume();
+         }
+        
+    }//GEN-LAST:event_txtAnosKeyTyped
 
     /**
      * @param args the command line arguments
@@ -134,6 +175,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cmdBorrar;
     private javax.swing.JButton cmdCalcular;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
